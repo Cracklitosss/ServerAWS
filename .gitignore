@@ -4,3 +4,13 @@ node_modules
 
 
 node_modules/
+
+git init
+
+git remote add origin https://github.com/Cracklitosss/WebsocketServer.git
+
+git add .
+
+ git commit -m ""
+
+  git push origin master 

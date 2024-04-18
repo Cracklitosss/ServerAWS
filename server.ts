@@ -13,7 +13,7 @@ const port = process.env.WEBSOCKET_PORT || '3004';
 const io = new Server(parseInt(port), {
     cors: {
         origin: "*", // Ajustar los orígenes permitidos en producción
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST", "PUT"]
     }
 });
 
