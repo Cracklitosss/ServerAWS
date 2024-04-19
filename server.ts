@@ -12,7 +12,7 @@ interface ClientData {
 const port = process.env.WEBSOCKET_PORT || '3004';
 const io = new Server(parseInt(port), {
     cors: {
-        origin: "*", // Ajustar los orígenes permitidos en producción
+        origin: "*",
         methods: ["GET", "POST", "PUT"]
     }
 });
@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
     socket.on("sensorData", (sensorData) => {
         console.log(`Datos de sensor recibidos en ${socket.id}:`, sensorData);
 
-        // Emitir a todos los clientes conectados
+      
         io.emit("updateSensorData", sensorData);
 
         // Adicionalmente, enviar datos al cliente específico que coincida con IdEsp
