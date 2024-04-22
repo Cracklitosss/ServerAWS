@@ -27,7 +27,7 @@ io.on("connection", (socket) => {
 
     socket.on("authenticate", (data) => {
         console.log(data,"hola");
-        const token = data.token;
+        const token = data;
         console.log(token);
         if (token) {
             try {
