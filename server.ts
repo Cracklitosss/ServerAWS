@@ -26,11 +26,12 @@ io.on("connection", (socket) => {
     console.log(`Nuevo cliente conectado: ${socket.id}`);
 
     socket.on("authenticate", (data) => {
+        console.log(data);
         const token = data.token;
+        console.log(token);
         if (token) {
             try {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET || '12345');
-                console.log(token);
                 if (typeof decoded === 'object' && 'id' in decoded && 'IdEsp' in decoded) {
                     clientData[socket.id] = { userId: decoded.id, IdEsp: Number(decoded.IdEsp) };
                     console.log(`Datos almacenados para este socket después de autenticar [Socket ID: ${socket.id}]:`, clientData[socket.id]);
