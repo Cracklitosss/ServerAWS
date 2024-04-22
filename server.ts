@@ -26,7 +26,7 @@ io.on("connection", (socket) => {
     console.log(`Nuevo cliente conectado: ${socket.id}`);
 
     socket.on("authenticate", (data) => {
-        console.log(data);
+        console.log(data,"hola");
         const token = data.token;
         console.log(token);
         if (token) {
