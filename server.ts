@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
+
 dotenv.config();
 
 interface ClientData {
@@ -10,6 +11,7 @@ interface ClientData {
 }
 
 const port = process.env.WEBSOCKET_PORT || '3004';
+
 const io = new Server(parseInt(port), {
     cors: {
         origin: "*",
@@ -28,6 +30,7 @@ io.on("connection", (socket) => {
         if (token) {
             try {
                 const decoded = jwt.verify(token, process.env.JWT_SECRET || '12345');
+                console.log(token);
                 if (typeof decoded === 'object' && 'id' in decoded && 'IdEsp' in decoded) {
                     clientData[socket.id] = { userId: decoded.id, IdEsp: Number(decoded.IdEsp) };
                     console.log(`Datos almacenados para este socket después de autenticar [Socket ID: ${socket.id}]:`, clientData[socket.id]);
@@ -48,10 +51,6 @@ io.on("connection", (socket) => {
     socket.on("sensorData", (sensorData) => {
         console.log(`Datos de sensor recibidos en ${socket.id}:`, sensorData);
 
-      
-        io.emit("updateSensorData", sensorData);
-
-        // Adicionalmente, enviar datos al cliente específico que coincida con IdEsp
         Object.entries(clientData).forEach(([socketId, data]) => {
             if (data.IdEsp === sensorData.IdEsp) {
                 console.log(`Enviando datos al cliente específico en socket ${socketId}`);
